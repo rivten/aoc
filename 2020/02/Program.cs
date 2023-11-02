@@ -1,5 +1,5 @@
 ﻿
-static bool IsPasswordValid(string password, int smallest, int biggest, char ruleChar)
+static bool IsPasswordValidV1(string password, int smallest, int biggest, char ruleChar)
 {
     int count = 0;
     foreach(char c in password)
@@ -12,8 +12,14 @@ static bool IsPasswordValid(string password, int smallest, int biggest, char rul
     return count >= smallest && count <= biggest;
 }
 
+static bool IsPasswordValidV2(string password, int smallest, int biggest, char ruleChar)
+{
+    return (password[smallest - 1] == ruleChar) ^ (password[biggest - 1] == ruleChar);
+}
+
 string? line;
-int validCount = 0;
+int validCountV1 = 0;
+int validCountV2 = 0;
 
 while((line = Console.ReadLine()) != null)
 {
@@ -21,12 +27,17 @@ while((line = Console.ReadLine()) != null)
     string[] countsAndChar = policyPassword[0].Split(" ");
     string[] counts = countsAndChar[0].Split("-");
     string ruleChar = countsAndChar[1];
-    string password = policyPassword[1];
+    string password = policyPassword[1].Trim();
     int smallest = Int32.Parse(counts[0]);
     int biggest = Int32.Parse(counts[1]);
-    if(IsPasswordValid(password, smallest, biggest, ruleChar[0]))
+    if(IsPasswordValidV1(password, smallest, biggest, ruleChar[0]))
     {
-        validCount++;
+        validCountV1++;
+    }
+    if(IsPasswordValidV2(password, smallest, biggest, ruleChar[0]))
+    {
+        validCountV2++;
     }
 }
-Console.WriteLine("{0}", validCount);
+Console.WriteLine("{0}", validCountV1);
+Console.WriteLine("{0}", validCountV2);
