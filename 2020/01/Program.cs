@@ -11,10 +11,13 @@ foreach (int x in report)
 {
     foreach (int y in report)
     {
-        if (x + y == 2020)
+        foreach (int z in report)
         {
-            Console.WriteLine("{0} {1}", x, y);
-            Console.WriteLine("{0}", x * y);
+            if (x + y + z == 2020)
+            {
+                Console.WriteLine("{0} {1} {2}", x, y, z);
+                Console.WriteLine("{0}", x * y * z);
+            }
         }
     }
 }
